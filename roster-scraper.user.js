@@ -3,6 +3,7 @@
 // @namespace   http://jamwheeler.com/roster-scraper
 // @description Scrapes resident data from https://vault.andrews.edu/vault and creates printable nametags
 // @include     https://vault.andrews.edu/vault/app/pages/secure/dara/list_rosters_process/*
+// @include     http://jamwheeler.com/roster-scraper/sample-room-assignments.html
 // @version     1
 // @grant       none
 // ==/UserScript==
