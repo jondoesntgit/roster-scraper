@@ -6,7 +6,10 @@
 Welcome to Vault Roster Scraper's documentation!
 ================================================
 
-Contents:
+Until Andrews ITS can provide a way to create
+door nametags  using up-to-date rosters, this repository
+will provide a user script for generating these
+rosters.
 
 .. toctree::
    :maxdepth: 2
