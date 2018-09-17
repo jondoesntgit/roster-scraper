@@ -17,8 +17,15 @@ console.log('Vault Roster Scraper v.1.1.0 loaded')
 // @include     file://*
 
 // Insert a button to run our main script
-$('div.vaultSection:first')
-  .after(
+
+if ($('div.vaultSection').length > 0){
+    theSelector = $('div.vaultSection:first')
+} else {
+  theSelector = $('input[name=updateBedPlacements]')
+}
+
+//$('div.vaultSection:first')
+theSelector.after(
   '<div class="roster-creation">' +
   'Name order: <select id="name-format">' +
   '  <option "last-first">Last, First</option>' +
@@ -165,8 +172,38 @@ $('#assignmentTable tbody tr').each(function(){
     }
 })
 
+if (Object.keys(rooms).length == 0) {
+  // No rooms found in first passs. try again
+
+
+    $('*:contains("Rooms Assigned")').parent('tbody').children('tr:contains("[00")').each(function () {
+      var room = $(this).children('td:nth-child(1)').text().trim()
+      var name = $(this).children('td:nth-child(3)').text().trim()
+      name = name.replace(/\s\[\d+\]/g,'').trim();
+      var order = $('#name-format').val()
+
+      if (order === 'First, Last'){
+          name = name.split(', ').reverse().join(' ');
+      } else{
+          // do nothing, we're already in this order
+      }
+
+        // add scraped text into dictionary
+        if (room in rooms){
+            // Aha! Another resident lives here. Add this name to the list in this room.
+            rooms[room].push(name)
+        } else {
+            // Add this room to the dictionary
+            rooms[room] = [name]
+        }
+
+
+      console.log(name)
+      console.log(room)
+    })
+}
+
 alert('Found ' + Object.keys(rooms).length + ' rooms');
 
 // Bind our function to our button
 $('.print-roster-btn').click(makePrint);
-
