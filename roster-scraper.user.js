@@ -19,17 +19,17 @@ console.log('Vault Roster Scraper v.1.1.0 loaded')
 // Insert a button to run our main script
 
 if ($('div.vaultSection').length > 0){
-    theSelector = $('div.vaultSection:first')
+   theSelector = $('div.vaultSection:first')
 } else {
-  theSelector = $('input[name=updateBedPlacements]')
+   theSelector = $('input[name=updateBedPlacements]').prev().prev().prev()
 }
 
 //$('div.vaultSection:first')
 theSelector.after(
   '<div class="roster-creation">' +
   'Name order: <select id="name-format">' +
+  '  <option "first-last">First Last</option>' +
   '  <option "last-first">Last, First</option>' +
-  '  <option "first-last">First, Last</option>' +
   '</select>' +
 '<button class="btn btn-defaut btn-xs btn-xs-vault print-roster-btn">Print Roster</button>' +
 '<p>Please contact Jonathan Wheeler at <a href="mailto:jonathan.m.wheeler@gmail.com">jonathan.m.wheeler@gmail.com</a> with any problems with this roster form.</p>' +
@@ -80,8 +80,11 @@ getRoomTable = function(residentList){
  * This function takes no paramters, and returns undefined. It only
  * changes the gui.
  */
-makePrint = function(){
+makePrint = function(e){
+
+    e.preventDefault();
   // Hide most elements on the page
+
   $('#wrapper').hide();
   
   
@@ -93,7 +96,7 @@ makePrint = function(){
 
   // To save paper, we try to write two rooms at a time. This variable holds the second room to write
   var prevRoomNumber;
-  
+
   for (var room in rooms) {
     
     // This is good coding practice to make sure the key is in the dict
@@ -139,6 +142,7 @@ makePrint = function(){
     myval = $(this).val() + 'px';
     $('.roster-table td td').css('font-size', myval)
   })
+
 }
 
 // Create a dictionary to place rooms in
@@ -175,12 +179,21 @@ $('#assignmentTable tbody tr').each(function(){
 if (Object.keys(rooms).length == 0) {
   // No rooms found in first passs. try again
 
-
+    var room
     $('*:contains("Rooms Assigned")').parent('tbody').children('tr:contains("[00")').each(function () {
-      var room = $(this).children('td:nth-child(1)').text().trim()
-      var name = $(this).children('td:nth-child(3)').text().trim()
+      var isRoomRow = $(this).children('td:nth-child(1)').text().indexOf('MEIER')+1;
+
+      if (isRoomRow) {
+         room = $(this).children('td:nth-child(1)').text().trim()
+         name = $(this).children('td:nth-child(3)').text().trim()
+      } else {
+         name = $(this).children('td:nth-child(2)').text().trim()
+      }
       name = name.replace(/\s\[\d+\]/g,'').trim();
       var order = $('#name-format').val()
+
+      if (!name) { return }
+      if (room.indexOf("Assigned") >= 0) { alert('continuing'); return }
 
       if (order === 'First, Last'){
           name = name.split(', ').reverse().join(' ');
@@ -196,10 +209,6 @@ if (Object.keys(rooms).length == 0) {
             // Add this room to the dictionary
             rooms[room] = [name]
         }
-
-
-      console.log(name)
-      console.log(room)
     })
 }
 
