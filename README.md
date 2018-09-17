@@ -2,7 +2,7 @@
 Andrews University Roster Scraper
 
 More extensive documentation is hosted in sphinx documentation, which
-can be accessed online at [jamwheeler.com/roster-scraper](jamwheeler.com/roster-scraper).
+can be accessed online at [github.jamwheeler.com/roster-scraper](//github.jamwheeler.com/roster-scraper).
 
 You should be able to auto-compile the docs with `make html` from the root.
 The only thing you need to be aware of is that it does not automatically
