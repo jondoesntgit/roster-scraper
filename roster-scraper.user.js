@@ -6,22 +6,27 @@
 // @include     http://github.jamwheeler.com/roster-scraper/sample-room-assignments.html
 // @include     https://github.jamwheeler.com/roster-scraper/sample-room-assignments.html
 // @include     file://*
-// @version     1
+// @require  http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
+// @version     1.1
 // @grant       none
 // ==/UserScript==
 
-console.log('Vault Roster Scraper v.1.1.0 loaded')
+
 
 // For debugging purposes, include this in the above block
 // @include     file://*
 
-// Insert a button to run our main script
+
+console.log('Vault Roster Scraper v.1.1.0 loaded');
+  
+  console.log($)
 
 if ($('div.vaultSection').length > 0){
    theSelector = $('div.vaultSection:first')
 } else {
    theSelector = $('input[name=updateBedPlacements]').prev().prev().prev()
 }
+
 
 //$('div.vaultSection:first')
 theSelector.after(
